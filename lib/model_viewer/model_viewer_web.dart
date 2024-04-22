@@ -1,12 +1,10 @@
 import 'dart:async';
+import 'entity/model_viewer.dart';
 import './widget/html_builder.dart';
 import 'package:flutter/material.dart';
-import './entity/model_viewer_plus.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'shim/dart_html_fake.dart' if (dart.library.html) 'dart:html';
 import 'shim/dart_ui_fake.dart' if (dart.library.html) 'dart:ui_web' as ui_web;
-
-
 
 class ModelViewerState extends State<ModelViewer> {
   bool _isLoading = true;

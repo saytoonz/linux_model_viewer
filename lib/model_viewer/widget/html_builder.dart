@@ -1,6 +1,6 @@
+import '../entity/model_viewer.dart';
 import 'dart:convert' show htmlEscape;
 import 'package:flutter/material.dart';
-import '../entity/model_viewer_plus.dart';
 
 abstract class HTMLBuilder {
   HTMLBuilder._();

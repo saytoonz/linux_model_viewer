@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model_viewer/entity/model_viewer_plus.dart';
-
+import '../model_viewer/entity/model_viewer.dart';
 
 void main() => runApp(const MyApp());
 

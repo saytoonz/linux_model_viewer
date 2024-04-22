@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import './model_viewer/entity/model_viewer_plus.dart';
+import 'model_viewer/entity/model_viewer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_linux_webview/flutter_linux_webview.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
