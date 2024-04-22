@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../model_viewer/model_viewer.dart';
 import '../model_viewer/model_viewer_web.dart';
-import '../model_viewer/entity/model_viewer.dart';
 import '../model_viewer/shim/dart_html_fake.dart'
     if (dart.library.html) 'dart:html';
 

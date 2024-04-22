@@ -1,4 +1,4 @@
-import 'entity/model_viewer.dart';
+import 'model_viewer.dart';
 import 'package:flutter/material.dart';
 
 class ModelViewerState extends State<ModelViewer> {

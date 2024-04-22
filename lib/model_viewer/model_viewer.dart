@@ -1,9 +1,9 @@
-import '../shim/dart_html_fake.dart';
 import 'package:flutter/material.dart';
-import '../model_viewer_linux_mobile.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
-
+import 'shim/dart_html_fake.dart' if (dart.library.html) 'dart:html';
+import 'model_viewer_stub.dart'
+    if (dart.library.io) 'model_viewer_linux_mobile.dart'
+    if (dart.library.js) 'model_viewer_web.dart';
 
 enum Loading { auto, lazy, eager }
 

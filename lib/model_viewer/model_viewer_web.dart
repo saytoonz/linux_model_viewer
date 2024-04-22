@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'entity/model_viewer.dart';
+import 'model_viewer.dart';
 import './widget/html_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -18,11 +18,10 @@ class ModelViewerState extends State<ModelViewer> {
 
   /// To generate the HTML code for using the model viewer.
   Future<void> generateModelViewerHtml() async {
-    final htmlTemplate = await rootBundle
-        .loadString('packages/model_viewer_plus/assets/template.html');
+    final htmlTemplate = await rootBundle.loadString('assets/template.html');
 
     // allow to use elements
-    final NodeValidator validator =
+    final NodeValidatorBuilder validator =
         widget.overwriteNodeValidatorBuilder ?? defaultNodeValidatorBuilder;
 
     final html = _buildHTML(htmlTemplate);

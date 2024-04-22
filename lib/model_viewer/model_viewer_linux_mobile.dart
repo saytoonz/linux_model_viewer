@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 import 'dart:async';
+import 'model_viewer.dart';
 import 'dart:convert' show utf8;
-import 'entity/model_viewer.dart';
 import './widget/html_builder.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
