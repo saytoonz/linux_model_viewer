@@ -1,0 +1,31 @@
+name: modelview_linux
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  webview_flutter: ^3.0.4
+  flutter_linux_webview: ^0.1.2
+  # webview_flutter_platform_interface: ^1.9.5
+  path: ^1.8.3
+  webview_flutter_platform_interface: ^1.9.5
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.2
+
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
