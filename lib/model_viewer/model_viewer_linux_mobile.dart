@@ -8,9 +8,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_linux_webview/flutter_linux_webview.dart';
+import 'package:android_intent_plus/android_intent.dart' as android_content;
 
 class ModelViewerState extends State<ModelViewer> with WidgetsBindingObserver {
   HttpServer? _proxy;
@@ -47,7 +49,7 @@ class ModelViewerState extends State<ModelViewer> with WidgetsBindingObserver {
   @override
   Widget build(final BuildContext context) {
     return WebView(
-      initialUrl: 'flutter.dev',
+      initialUrl: null,
       javascriptMode: JavascriptMode.unrestricted,
       backgroundColor: Colors.transparent,
       onWebViewCreated: (WebViewController controller) async {
@@ -56,6 +58,76 @@ class ModelViewerState extends State<ModelViewer> with WidgetsBindingObserver {
       },
       gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{
         Factory<OneSequenceGestureRecognizer>(EagerGestureRecognizer.new),
+      },
+      navigationDelegate: (request) async {
+        debugPrint('ModelViewer wants to load: ${request.url}');
+        if (Platform.isIOS && request.url == widget.iosSrc) {
+          await launchUrl(
+            Uri.parse(request.url.trimLeft()),
+            mode: LaunchMode.inAppWebView,
+          );
+          return NavigationDecision.prevent;
+        }
+        if (Platform.isLinux) {
+          return NavigationDecision.prevent;
+        }
+        if (!Platform.isAndroid) {
+          return NavigationDecision.navigate;
+        }
+        if (!request.url.startsWith('intent://')) {
+          return NavigationDecision.navigate;
+        }
+        try {
+          // Original, just keep as a backup
+          // See: https://developers.google.com/ar/develop/java/scene-viewer
+          // final intent = android_content.AndroidIntent(
+          //   action: "android.intent.action.VIEW", // Intent.ACTION_VIEW
+          //   data: "https://arvr.google.com/scene-viewer/1.0",
+          //   arguments: <String, dynamic>{
+          //     'file': widget.src,
+          //     'mode': 'ar_preferred',
+          //   },
+          //   package: "com.google.ar.core",
+          //   flags: <int>[
+          //     Flag.FLAG_ACTIVITY_NEW_TASK
+          //   ], // Intent.FLAG_ACTIVITY_NEW_TASK,
+          // );
+
+          final String fileURL;
+          if (['http', 'https'].contains(Uri.parse(widget.src).scheme)) {
+            fileURL = widget.src;
+          } else {
+            fileURL = path.joinAll([_proxyURL, 'model']);
+          }
+          final intent = android_content.AndroidIntent(
+            action: 'android.intent.action.VIEW',
+            // Intent.ACTION_VIEW
+            // See https://developers.google.com/ar/develop/scene-viewer#3d-or-ar
+            // data should be something like "https://arvr.google.com/scene-viewer/1.0?file=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf"
+            data: Uri(
+              scheme: 'https',
+              host: 'arvr.google.com',
+              path: '/scene-viewer/1.0',
+              queryParameters: {
+                'mode': 'ar_preferred',
+                'file': fileURL,
+              },
+            ).toString(),
+            // package changed to com.google.android.googlequicksearchbox
+            // to support the widest possible range of devices
+            package: 'com.google.android.googlequicksearchbox',
+            arguments: <String, dynamic>{
+              'browser_fallback_url':
+                  'market://details?id=com.google.android.googlequicksearchbox',
+            },
+          );
+          await intent.launch().onError((error, stackTrace) {
+            debugPrint('ModelViewer Intent Error: $error');
+          });
+        } on Object catch (error) {
+          debugPrint('ModelViewer failed to launch AR: $error');
+        }
+        return NavigationDecision.prevent;
       },
     );
   }
