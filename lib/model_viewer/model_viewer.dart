@@ -12,7 +12,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_linux_webview/flutter_linux_webview.dart';
 
-
 class ModelViewerState extends State<ModelViewer> with WidgetsBindingObserver {
   HttpServer? _proxy;
 
@@ -38,13 +37,12 @@ class ModelViewerState extends State<ModelViewer> with WidgetsBindingObserver {
     super.dispose();
   }
 
-    @override
+  @override
   Future<AppExitResponse> didRequestAppExit() async {
     await LinuxWebViewPlugin.terminate();
     return AppExitResponse.exit;
   }
   // ===== end: For Flutter 3.10 or later =====
-  
 
   @override
   Widget build(final BuildContext context) {

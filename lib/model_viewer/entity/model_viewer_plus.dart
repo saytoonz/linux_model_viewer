@@ -1,7 +1,9 @@
+import '../model_viewer.dart';
 import '../shim/dart_html_fake.dart';
 import 'package:flutter/material.dart';
-import '../model_viewer_plus_mobile.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+
 
 enum Loading { auto, lazy, eager }
 
