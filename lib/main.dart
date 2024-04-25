@@ -47,20 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(
-        child: ModelViewer(
-          backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-          skyboxImage:
-              'https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr',
-          alt: 'A 3D model of a damaged helmet',
-          src:
-              'https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/DamagedHelmet/glTF/DamagedHelmet.gltf',
-          ar: true,
-          arModes: ['scene-viewer', 'webxr', 'quick-look'],
-          autoRotate: true,
-          disableZoom: true,
-          cameraControls: true,
-        ),
+      body: ModelViewer(
+        backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
+        skyboxImage:
+            'https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr',
+        alt: 'A 3D model of a damaged helmet',
+        src:
+            'https://modelviewer.dev/shared-assets/models/glTF-Sample-Assets/Models/DamagedHelmet/glTF/DamagedHelmet.gltf',
+        ar: true,
+        arModes: ['scene-viewer', 'webxr', 'quick-look'],
+        autoRotate: true,
+        disableZoom: false,
+        cameraControls: true,
       ),
     );
   }
